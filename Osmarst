@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char estado[3];
+    char nome[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
+} Carta;
+
+int main() {
+    // Cartas cadastradas
+    Carta cartas[4] = {
+        {"SP", "São Paulo", 12300000, 1521.11, 2000000, 10, 0, 0},
+        {"RJ", "Rio de Janeiro", 6000000, 1200.50, 1500000, 8, 0, 0},
+        {"MG", "Belo Horizonte", 2500000, 331.4, 800000, 5, 0, 0},
+        {"BA", "Salvador", 2900000, 693.0, 900000, 7, 0, 0}
+    };
+
+    // Calculando densidade populacional e PIB per capita
+    for(int i=0; i<4; i++){
+        cartas[i].densidadePopulacional = cartas[i].populacao / cartas[i].area;
+        cartas[i].pibPerCapita = cartas[i].pib / cartas[i].populacao;
+    }
+
+    char estado1[3], estado2[3];
+    int index1=-1, index2=-1;
+
+    // Pedindo ao usuário os estados
+    printf("Digite a sigla do primeiro estado todas em maiusculo: ");
+    scanf(" %2s", estado1);
+    printf("Digite a sigla do segundo estado todas em maiusculo: ");
+    scanf(" %2s", estado2);
+
+    // Encontrando os índices das cartas
+    for(int i=0; i<4; i++){
+        if(strcmp(cartas[i].estado, estado1) == 0) index1 = i;
+        if(strcmp(cartas[i].estado, estado2) == 0) index2 = i;
+    }
+
+    if(index1==-1 || index2==-1){
+        printf("Estado invalido!\n");
+        return 0;
+    }
+
+    // Comparação (População)
+    printf("\nComparacao de cartas (Atributo: Populacao):\n");
+    printf("%s: %d\n", cartas[index1].nome, cartas[index1].populacao);
+    printf("%s: %d\n", cartas[index2].nome, cartas[index2].populacao);
+
+    if(cartas[index1].populacao > cartas[index2].populacao)
+        printf("Resultado: %s venceu!\n", cartas[index1].nome);
+    else if(cartas[index1].populacao < cartas[index2].populacao)
+        printf("Resultado: %s venceu!\n", cartas[index2].nome);
+    else
+        printf("Empate!\n");
+
+    return 0;
+}
